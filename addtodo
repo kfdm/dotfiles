@@ -1,0 +1,12 @@
+#!/usr/bin/osascript
+-- Shell Script to quick add task to The Hit List
+on run(args)
+	set AppleScript's text item delimiters to " "
+	set newTitle to args as string
+	tell application "The Hit List"
+		tell inbox to make new task with properties {¬
+			title: newTitle ¬
+		}
+	end tell
+	"Added: '" & newTitle & "'"
+end run
