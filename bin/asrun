@@ -1,0 +1,7 @@
+#!/usr/bin/osascript
+-- Use applescript to exit an app
+on run(args)
+	set AppleScript's text item delimiters to " "
+	set appTitle to args as string
+	tell application appTitle to activate
+end run
