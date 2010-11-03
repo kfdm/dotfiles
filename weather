@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+require 'yahoo-weather'
+
+@client = YahooWeather::Client.new
+response = @client.lookup_by_woeid(12797160,YahooWeather::Units::CELSIUS)
+
+print <<edoc
+#{response.title}
+Now - #{response.condition.text}.  #{response.condition.temp}
+#{response.forecasts[0].day} - #{response.forecasts[0].text}.  High: #{response.forecasts[0].high} Low: #{response.forecasts[0].low}
+#{response.forecasts[1].day} - #{response.forecasts[1].text}.  High: #{response.forecasts[1].high} Low: #{response.forecasts[1].low}
+edoc
