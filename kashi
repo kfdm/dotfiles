@@ -1,0 +1,14 @@
+#!/usr/bin/osascript
+-- Print the lyrics of the currently playing song
+on run(args)
+	tell application "iTunes"
+		set songLyrics to lyrics of current track as Unicode text
+	end tell
+	
+	if songLyrics is "" then return "No Lyrics"
+	
+	set AppleScript's text item delimiters to "\r"
+	set songLines to text items of songLyrics
+	set AppleScript's text item delimiters to "\n"
+	return songLines as Unicode text
+end run
