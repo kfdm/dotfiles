@@ -3,6 +3,7 @@
 -- Can be run with either a numeric value
 -- or the strings 'max' or 'half'
 on run(level)
+	if level is equal to {} then return "Volume is " & output volume of (get volume settings)
 	if level is equal to {"max"} then set level to 100
 	if level is equal to {"half"} then set level to 50
 	set volume output volume level
