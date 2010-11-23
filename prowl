@@ -1,0 +1,11 @@
+#!/bin/sh
+APIKEY=`defaults read net.weks.prowl apikey`
+APP='prowl cmd'
+EVENT='Notification'
+
+curl \
+	-d "apikey=$APIKEY" \
+	-d "application=$APP" \
+	-d "event=$EVENT" \
+	-d "description=$*" \
+	https://prowl.weks.net/publicapi/add
