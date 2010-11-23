@@ -1,0 +1,17 @@
+#!/bin/sh
+USER=`defaults read com.howlapp username`
+PASS=`defaults read com.howlapp password`
+HOST=`hostname`
+APP='prowl'
+TITLE='terminal message'
+
+curl \
+	-X POST \
+	--data "name=$APP" \
+	--data "title=$TITLE" \
+	--data "description=$*" \
+	--data "application=$APP" \
+	--data "icon-name=terminal" \
+	--data "hostname=$HOST" \
+	-u "$USER:$PASS" \
+	https://howlapp.com/public/api/notification
