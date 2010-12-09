@@ -1,0 +1,10 @@
+#!/bin/bash
+# Set the title for a Terminal.app window
+# Example taken from http://hints.macworld.com/article.php?story=20020523233857363
+
+if [ $# -ne 1 ]; then
+  echo "Usage: `basename $0` {arg}"
+  exit $E_BADARGS
+fi
+
+echo -n -e "\033]0;$1\007"
