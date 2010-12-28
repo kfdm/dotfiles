@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+case ARGV[0]
+when 'away'
+	puts 'away...'
+	`osascript -e 'tell application "Adium" to go away with message "#{ARGV[1]}"'`
+when 'back'
+	puts 'back...'
+	`osascript -e 'tell application "Adium" to go available'`
+when 'quit'
+	puts 'quitting...'
+	`osascript -e 'tell application "Adium" to quit'`
+else
+	puts 'Unknown command ' + ARGV.join(' ')
+end
