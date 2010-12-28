@@ -1,0 +1,39 @@
+#!/usr/bin/env ruby
+case ARGV[0]
+when 'play','p','start'
+	puts 'playing...'
+	`osascript -e 'tell application "iTunes" to play'`
+when 'stop','s'
+	puts 'stopping...'
+	`osascript -e 'tell application "iTunes" to stop'`
+when 'pause'
+	puts 'pausing...'
+	`osascript -e 'tell application "iTunes" to pause'`
+when 'next','n'
+	puts 'next track ...'
+	`osascript -e 'tell application "iTunes" to next track'`
+when 'mute','m'
+	puts 'muting...'
+	`osascript -e 'tell application "iTunes" to set mute to true'`
+when 'unmute'
+	puts 'unmuting...'
+	`osascript -e 'tell application "iTunes" to set mute to false'`
+when 'prev','previous'
+	puts 'previous track ...'
+	`osascript -e 'tell application "iTunes" to previous track'`
+when 'playlist','pl'
+	puts 'switching to playlist '+ARGV[1]
+	`osascript -e 'tell application "iTunes" to play playlist "#{ARGV[1]}"'`
+when 'volume','vol'
+	`osascript -e 'tell application "iTunes" to set sound volume to  #{ARGV[1]}'`
+when 'quit','q','exit'
+	`osascript -e 'tell application "iTunes" to quit'`
+when 'status','state'
+	state = `osascript -e 'tell application "iTunes" to player state as string'`
+	puts "iTunes is currently #{state}"
+	artist = `osascript -e 'tell application "iTunes" to artist of current track as string'`.strip
+	track = `osascript -e 'tell application "iTunes" to name of current track as string'`.strip
+	puts "Current track #{artist}: #{track}"
+else
+	puts 'Unknown command ' + ARGV.join(' ')
+end
