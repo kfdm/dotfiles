@@ -31,9 +31,16 @@ when 'quit','q','exit'
 when 'status','state'
 	state = `osascript -e 'tell application "iTunes" to player state as string'`
 	puts "iTunes is currently #{state}"
-	artist = `osascript -e 'tell application "iTunes" to artist of current track as string'`.strip
-	track = `osascript -e 'tell application "iTunes" to name of current track as string'`.strip
-	puts "Current track #{artist}: #{track}"
+	track= `osascript <<EOF
+		tell application "iTunes"
+			if current track's class is URL track then
+				current stream title
+			else
+				(artist of current track) & "-" & (name of current track)
+			end if
+		end tell
+EOF`.strip
+	puts "Current track #{track}"
 else
 	puts 'Unknown command ' + ARGV.join(' ')
 end
