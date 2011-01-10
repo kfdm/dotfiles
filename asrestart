@@ -1,0 +1,15 @@
+#!/usr/bin/osascript
+-- Use applescript to restart an app
+on run(args)
+	set AppleScript's text item delimiters to " "
+	set appTitle to args as string
+	set appRunning to false
+	tell application "System Events" to set appRunning to ((name of processes) contains appTitle)
+	if appRunning then
+		tell application appTitle to quit
+		delay 10
+		tell application appTitle to activate
+	else
+		tell application appTitle to activate
+	end if
+end run
