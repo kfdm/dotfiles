@@ -8,4 +8,4 @@ curl \
 	-d "application=$APP" \
 	-d "event=$EVENT" \
 	-d "description=$*" \
-	https://prowl.weks.net/publicapi/add
+	https://www.prowlapp.com/publicapi/add
