@@ -4,4 +4,5 @@ on run(args)
 	set AppleScript's text item delimiters to " "
 	set appTitle to args as string
 	tell application appTitle to activate
+	"Running " & appTitle
 end run
