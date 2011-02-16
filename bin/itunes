@@ -1,13 +1,13 @@
 #!/usr/bin/env ruby
 case ARGV[0]
 when 'play','p','start'
-	puts 'playing...'
+	puts 'iTunes is now playing'
 	`osascript -e 'tell application "iTunes" to play'`
 when 'stop','s'
-	puts 'stopping...'
+	puts 'Stopping iTunes'
 	`osascript -e 'tell application "iTunes" to stop'`
 when 'pause'
-	puts 'pausing...'
+	puts 'Pausing itunes'
 	`osascript -e 'tell application "iTunes" to pause'`
 when 'next','n'
 	puts 'next track ...'
