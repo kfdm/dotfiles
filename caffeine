@@ -2,10 +2,10 @@
 case ARGV[0]
 when 'on'
 	`osascript -e 'tell application "Caffeine" to turn on'`
-	puts 'on'
+	puts 'Setting caffeine to on'
 when 'off'
 	`osascript -e 'tell application "Caffeine" to turn off'`
-	puts 'off'
+	puts 'Setting caffeine to off'
 else
-	puts `osascript -e 'tell application "Caffeine" to get active'`
+	puts 'Caffeine is '+`osascript -e 'tell application "Caffeine" to get active'`
 end
