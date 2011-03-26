@@ -1,0 +1,3 @@
+#!/bin/sh
+# Print the OSX settings domains as a list
+defaults domains | tr ',' "\n" | sed -e 's/ //'
