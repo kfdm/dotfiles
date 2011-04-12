@@ -4,11 +4,9 @@ on run(args)
 	tell application "iTunes"
 		set songLyrics to lyrics of current track as Unicode text
 	end tell
-	
 	if songLyrics is "" then return "No Lyrics"
-	
-	set AppleScript's text item delimiters to "\r"
-	set songLines to text items of songLyrics
-	set AppleScript's text item delimiters to "\n"
-	return songLines as Unicode text
+	tell application "TextEdit"
+		set the text of document 1 to songLyrics
+		tell the front document to set size to 24
+	end tell
 end run
