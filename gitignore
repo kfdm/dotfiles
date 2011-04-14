@@ -1,0 +1,14 @@
+#Mac Files
+.DS_Store
+
+#Eclipse Settings
+.buildpath
+.project
+.pydevproject
+.settings*
+
+#Python Files
+*.pyc
+
+#Screen files
+screenlog.*
