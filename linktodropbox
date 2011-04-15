@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+# Move a file to Dropbox and symlink it back
+exit "Mising argument" if ARGV.count == 0
+
+SOURCE = ARGV[0]
+FILE = File.basename SOURCE
+DROPBOX = "#{ENV["HOME"]}/Dropbox/Settings"
+TARGET = "#{DROPBOX}/#{FILE}"
+
+exit "Missing Dropbox: #{DROPBOX}" if not File.exists? DROPBOX
+exit "Target already exists: #{TARGET}" if File.exists? TARGET
+
+puts `mv #{SOURCE} #{TARGET}`
+puts `ln -s #{TARGET} #{FILE}`
