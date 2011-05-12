@@ -12,3 +12,7 @@
 
 #Screen files
 screenlog.*
+
+# Random
+*.log
+*.pid
