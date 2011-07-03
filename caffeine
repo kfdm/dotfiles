@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 case ARGV[0]
-when 'on'
+when 'on','start'
 	`osascript -e 'tell application "Caffeine" to turn on'`
 	puts 'Setting caffeine to on'
-when 'off'
+when 'off','stop'
 	`osascript -e 'tell application "Caffeine" to turn off'`
 	puts 'Setting caffeine to off'
 else
