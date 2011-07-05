@@ -1,0 +1,40 @@
+#!/bin/zsh
+# Taken from http://www.stum.de/2011/01/09/a-little-eggtimer-script-using-growl/
+function verifyminutes () {
+	echo -n $1 | grep -Eq "^[0-9]+$"
+	echo $?
+}
+function gettargettime() {
+	date -v +$1M "+%H:%M"
+}
+function getmessage() {
+	# function to collapse arguments $2..$n together (skipping $1)
+	# I'm pretty sure there is a better way of doing this
+	local FIRST_PARAMETER=0
+	for i;
+	do {
+		if [ "$FIRST_PARAMETER" -eq 0 ]; then
+			FIRST_PARAMETER=1
+			continue
+		fi
+		echo -n $i" ";
+	}
+	done
+	echo "\b"
+}
+
+local ISNUMBER=`verifyminutes $1`
+[[ -z $1 || -z $2 || "$ISNUMBER" -gt 0 ]] && {
+	echo "usage: $0 minutes message"
+	exit 1
+}
+
+local TARGET_TIME=`gettargettime $1`
+MESSAGE=`getmessage $@`
+echo "Reminder set at $TARGET_TIME: $MESSAGE"
+
+at now + $1 minutes >/dev/null 2>&1 << eol
+growlnotify -t "Reminder at $TARGET_TIME" -m "$MESSAGE" -s -a iCal
+eol
+
+exit 0
