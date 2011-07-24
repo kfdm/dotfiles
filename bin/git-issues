@@ -1,0 +1,2 @@
+#!/bin/sh
+ghi -v -l -r gntp
