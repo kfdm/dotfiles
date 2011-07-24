@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+# Inspired by https://gist.github.com/973277
+
+require 'ubygems'
+require 'colored'
+require 'octokit'
+
+options = {
+	:login => %x[ git config --get github.user ].strip,
+	:token => %x[ git config --get github.token ].strip,
+}
+
+client = Octokit::Client.new( options )
+
+client.list_repos.each do |repo|
+	next if repo.fork
+	next unless repo.open_issues > 0
+	#next if repo.size > 0 && !repo.include?(repo.name)
+	puts "Repository : %s (%s)" % [
+		"#{repo.name}".green,
+		"#{repo.open_issues}".yellow
+		]
+	client.issues( repo ).each do |issue|
+		puts "%s : %s - %s" % [
+			"#{issue.number}".rjust(5).cyan,
+			"#{issue.title}",
+			"#{issue.user}".red
+			]
+	end
+end
