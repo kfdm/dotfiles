@@ -1,15 +1,46 @@
 #!/usr/bin/env ruby
+# Simple Adium Control script
+
+# Check if Adium is currently running
+$running = `osascript -e 'tell application "System Events" to (name of processes) contains "Adium"'`.chomp! == 'true'
+# Simple check for a --force argument
+$force = ARGV.delete("--force") != nil
+
 case ARGV[0]
-when 'away'
+when 'help','h',nil
+	puts <<-EOS.gsub(/^\t*/, '')
+		Simple Adium control script
+		===========================
+		[a]way [message] - Set Adium away with an optional message
+		[b]ack           - Set adium to be available
+		[q]uit           - Quit Adium
+		[r]unning        - Test if Adium is running
+		available        - Is Adium available or busy
+		[h]elp
+		
+		Flags
+		--force        - Force the commadn to run even if adium is not running
+	EOS
+when 'away','a'
+	exit false if ($running == false and $force == false)
 	ARGV.shift
 	`osascript -e 'tell application "Adium" to go away with message "#{ARGV.join(' ')}"'`
 	puts "Setting Adium away with message '#{ARGV.join(' ')}'"
-when 'back'
+when 'back','b'
+	exit false if ($running == false and $force == false)
 	`osascript -e 'tell application "Adium" to go available'`
 	puts "Adium is now available"
-when 'quit'
+when 'quit','q'
 	`osascript -e 'tell application "Adium" to quit'`
 	puts 'Quitting Adium'
+when 'running','r'
+	exit $running
+when 'available'
+	exit false if $running == false
+	$status = `osascript -e 'tell application "Adium" to get status type of global status'`.chomp! == 'available'
+	puts $status?'Adium is available':'Adium is away'
+	exit $status
 else
 	puts 'Unknown command ' + ARGV.join(' ')
+	exit false
 end
