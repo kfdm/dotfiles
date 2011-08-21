@@ -1,6 +1,8 @@
 # Taken from https://github.com/holman/dotfiles
 require 'rake'
 
+$install_dir = File.dirname(__FILE__) + '/install'
+
 desc "Hook our dotfiles into system-standard positions."
 task :install do
   linkables = Dir.glob('*{.symlink}')
@@ -34,3 +36,6 @@ task :install do
   end
 end
 task :default => 'install'
+
+# From http://www.madcowley.com/madcode/2010/12/running-migrations-in-sinatra/
+Dir.glob("#{$install_dir}/*.rake").each { |r| import r }
