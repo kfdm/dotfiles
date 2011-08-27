@@ -1,5 +1,21 @@
 #!/usr/bin/env ruby
 case ARGV[0]
+when 'help','h',nil
+	puts <<-EOS.gsub(/^\t*/, '')
+		Simple iTunes control script
+		===========================
+		[p]lay/start      - Tell iTunes to play the currently selected song
+		[s]top            - Tell iTunes to stop playing
+		pause             - Pause iTunes
+		[n]ext            - Next song
+		prev/previous     - Previous song
+		[m]ute            - Mute iTunes
+		unmute            - Unmute iTunes
+		[pl]aylist <name> - Switch to playlist
+		[vol]ume <number> - Set iTunes volume
+		status/state
+		[q]uit
+	EOS
 when 'play','p','start'
 	puts 'iTunes is now playing'
 	`osascript -e 'tell application "iTunes" to play'`
