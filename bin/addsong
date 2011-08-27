@@ -1,0 +1,16 @@
+#!/usr/bin/osascript
+-- Add currently playing song to TheHitList
+on run ()
+	tell application "iTunes"
+		if current track's class is URL track then
+			set trackString to current stream title
+			tell application "The Hit List"
+				tell inbox to make new task with properties ¬
+					{title:trackString}
+				return "Added: " & trackString
+			end tell
+		else
+			return "Local track"
+		end if
+	end tell
+end run
