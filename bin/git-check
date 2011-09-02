@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+require 'ubygems'
+require 'colored'
+# Check for README and LICENSE files
+$PROJECT_DIR = `git config --get user.projectdir`.chomp
+puts "Checking GitHub repos for README and LICENSE files"
+Dir.glob("#{$PROJECT_DIR}/*/.git").each do |d|
+	@DIR = File.dirname(d)
+	@REPO = File.basename(@DIR)
+	@README = false
+	@LICENSE = false
+	Dir.chdir(@DIR)
+	
+	# Check if it is a GitHub Repo
+	@GITHUB = `git remote show -n origin`.include? 'Push  URL: git@github.com:'
+	next if @GITHUB == false
+	
+	@README = Dir.glob("#{@DIR}/README*").length > 0
+	@LICENSE = Dir.glob("#{@DIR}/{LICENSE,COPYING}").length > 0
+	
+	next if (@README and @LICENSE)
+	
+	puts "%-30s %10s %10s" % [
+		@REPO,
+		@README ? 'README'.blue : "README".red,
+		@LICENSE ? 'LICENSE'.blue : "LICENSE".yellow,
+	]
+end
