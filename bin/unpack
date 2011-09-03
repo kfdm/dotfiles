@@ -1,0 +1,21 @@
+#!/usr/bin/ruby
+# Taken from http://codereview.stackexchange.com/questions/4534/fixing-archive-annoyances-with-ruby
+# and https://github.com/holman/dotfiles/blob/master/zsh/functions/smartextract
+ARGV.each do |target|
+	case target
+	when /\.tgz$/i,/\.tar\.gz/i
+		`tar -zcvf '#{target}'`
+	when /\.tbz2$/i,/\.tar\.bz2/i
+		`tar -jxvf '#{target}'`
+	when /\.tar$/i
+		`tar -xvf '#{target}'`
+	when /\.zip$/
+		`unzip '#{target}'`
+	when /\.rar$/i
+		`unrar e '#{target}'`
+	when /\.dmg$/i
+		`hdiutil mount '#{target}'`
+	else
+		p "Dunno how to deal with '#{target}' files"
+	end
+end
