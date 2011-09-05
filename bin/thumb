@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+# Taken from http://stackoverflow.com/questions/2442248/basic-image-resizing-in-ruby-on-rails/2442497#2442497
+
+require 'ubygems'
+require 'RMagick'
+
+ARGV.each do |path|
+  path = File.expand_path path,Dir.getwd
+  raise "File does not exist" if not File.exists? path
+  
+  image = Magick::Image.read(path).first
+  image.change_geometry!("100") do |cols, rows, img|
+    ext = File.extname(path)
+    newpath = path.gsub(ext,".thumb#{ext}")
+    puts "Writing #{File.basename(path)} to #{File.basename(newpath)}"
+    newimg = img.resize(cols, rows)
+    newimg.write(newpath)
+  end
+end
