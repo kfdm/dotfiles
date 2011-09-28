@@ -1,4 +1,0 @@
-#!/usr/bin/env ruby
-text = STDIN.read.gsub('"','\"')
-#puts text
-`osascript -e 'tell application "System Events" to display dialog "" default answer "#{text}" buttons {"OK"} default button 1'`

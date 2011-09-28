@@ -1,5 +1,31 @@
-#!/usr/bin/osascript
-tell application "System Events"
-	set AppleScript's text item delimiters to "\n"
-	return (name of processes) as string
-end tell
+#!/usr/bin/env ruby
+# Wrapper to control apps through applescript
+
+def help
+	puts <<-EOS.gsub(/^\t*/, '')
+		Simple Apps Control Script
+		===========================
+		[l]list        - List running apps
+		[r]un          - Run app
+		[k]ill         - Kill app
+		running        - Check if an app is running (returns exit code)
+		[h]elp
+	EOS
+end
+
+case ARGV[0]
+when 'help', 'h','-h','--help'
+	help
+when nil,'list','l'
+	puts `osascript -e 'tell application "System Events" to return (name of every process whose visible is true) '`.split(', ')
+when 'run','r'
+	puts `osascript -e 'tell application "#{ARGV[1]}" to activate'`
+when 'kill','k'
+	puts `osascript -e 'tell application "#{ARGV[1]}" to quit'`
+when 'running'
+	running =  `osascript -e 'tell application "System Events" to (name of processes) contains "#{ARGV[1]}"'`.strip
+	exit (running == 'true') ? 0 : 1
+else
+	puts 'Unknown command'
+	help
+end
