@@ -9,7 +9,9 @@ $IGNORE_FILES = {
 	'Repo Ignore' => "#{$REPO_DIR}/.gitignore"
 }
 
-if ARGV[1] == nil
+$ADD_TO_LOCAL = ARGV.delete("--local") != nil
+
+if ARGV[0] == nil
 	puts 'Printing ignore file(s)'
 	$IGNORE_FILES.each_pair do |label, path|
 		if File.exists? path
@@ -20,5 +22,10 @@ if ARGV[1] == nil
 		end
 	end
 else
-	puts 'Adding to ignore file'
+	$IGNORE_FILE = $ADD_TO_LOCAL ?
+		$IGNORE_FILES['Local Ignore'] :
+		$IGNORE_FILES['Repo Ignore']
+	puts "Adding [#{ARGV[0]}] to #{$IGNORE_FILE}"
+	$FILE = File.open($IGNORE_FILE,'a')
+	$FILE << "#{ARGV[0]}\n"
 end
