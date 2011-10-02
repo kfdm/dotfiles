@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+
+# Make sure we are in a Git repo
+$REPO_DIR =  `git rev-parse --show-toplevel`.chomp
+
+$IGNORE_FILES = {
+	'Global Ignore' => File.expand_path( "~/.gitignore"),
+	'Local Ignore' => "#{$REPO_DIR}/.git/info/exclude", 
+	'Repo Ignore' => "#{$REPO_DIR}/.gitignore"
+}
+
+if ARGV[1] == nil
+	puts 'Printing ignore file(s)'
+	$IGNORE_FILES.each_pair do |label, path|
+		if File.exists? path
+			puts label
+			puts "-" * 80
+			puts File.open(path).read
+			puts
+		end
+	end
+else
+	puts 'Adding to ignore file'
+end
