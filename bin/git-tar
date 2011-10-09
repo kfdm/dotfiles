@@ -1,0 +1,15 @@
+#!/bin/sh
+# Simple script to tar up a zip directory to send off
+
+GIT_DIR=`git rev-parse --show-toplevel`
+if [ $? -ne 0 ]; then
+	exit 1
+fi
+
+TAR_FILE="`basename ${GIT_DIR}`.tgz"
+TAR_DIR=`basename ${GIT_DIR}`
+COMMAND="tar czfv ${TAR_FILE} ${TAR_DIR}"
+
+cd "${GIT_DIR}/.."
+echo $COMMAND
+`$COMMAND`
