@@ -1,0 +1,6 @@
+// Place user-specific overrides in this file, to ensure they're preserved
+// when upgrading
+{
+	"hot_exit": false,
+	"remember_open_files": false
+}

@@ -1,0 +1,10 @@
+{
+	"color_scheme": "Packages/Color Scheme - Default/Twilight.tmTheme",
+	"draw_minimap_border": true,
+	"fallback_encoding": "UTF-8",
+	"rulers":
+	[
+		80,
+		100
+	]
+}
