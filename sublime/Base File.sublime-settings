@@ -1,10 +1,13 @@
 {
 	"color_scheme": "Packages/Color Scheme - Default/Twilight.tmTheme",
+	"default_line_ending": "unix",
 	"draw_minimap_border": true,
+	"draw_white_space": "all",
 	"fallback_encoding": "UTF-8",
 	"rulers":
 	[
 		80,
 		100
-	]
+	],
+	"translate_tabs_to_spaces": true
 }
