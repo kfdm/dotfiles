@@ -1,0 +1,25 @@
+# Always use UTF-8
+export LC_ALL="en_US.UTF-8"
+export LANG="en_US.UTF-8"
+
+# If we find Textmate, use it for our editor
+which -s mate
+if [ $? -eq 0 ]; then
+    export GEM_EDITOR='mate'
+    export GEM_OPEN_EDITOR="mate -w"
+fi
+
+# Include locally installed files
+PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
+export PATH
+
+# ignore backups, CVS directories, python bytecode, vim swap files
+FIGNORE="~:CVS:#:.pyc:.swp:.swa:apache-solr-*"
+
+export HISTCONTROL='ignoredups:ignorespace:erasedups'
