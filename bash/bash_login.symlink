@@ -25,7 +25,7 @@ else
 fi
 
 # Add Timestamp
-export PS1="[\[\033[01;32m\]\$(date +%H:%M:%S)\[\033[00m\]\]]$PS1"
+export PS1="[\[\033[01;32m\]\t\[\033[00m\]\]]$PS1"
 
 . /usr/local/Library/Contributions/brew_bash_completion.sh
 . /usr/local/etc/bash_completion.d/git-completion.bash
