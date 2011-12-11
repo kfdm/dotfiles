@@ -29,5 +29,5 @@ export HISTCONTROL='ignoredups:ignorespace:erasedups'
 # the workon command
 workon() {
     source /usr/local/bin/virtualenvwrapper.sh
-    workon
+    workon $*
 }
