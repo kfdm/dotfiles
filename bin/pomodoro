@@ -15,6 +15,9 @@ when 'start','s'
     ARGV.shift
     `osascript -e 'tell application "Pomodoro" to start "#{ARGV.join(' ')}" duration 25'`
     puts "Starting 25 min Pomodoro Sprint [#{ARGV.join(' ')}]"
+when 'force','f'
+    `osascript -e 'tell application "Pomodoro" to force completion'`
+    puts "Force Pomodoro Sprint Completion"
 when 'reset','r'
     `osascript -e 'tell application "Pomodoro" to reset'`
     puts "Resetting Pomodoro Sprint"
