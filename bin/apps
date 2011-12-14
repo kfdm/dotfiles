@@ -6,6 +6,8 @@ def help
 		Simple Apps Control Script
 		===========================
 		[l]list        - List running apps
+		    --id       - Use bundle identifier instead of name
+		    --all      - Show everything and not just "visible" processes
 		[r]un          - Run app
 		[k]ill         - Kill app
 		running        - Check if an app is running (returns exit code)
@@ -13,17 +15,20 @@ def help
 	EOS
 end
 
+IDENTIFIER = ARGV.delete('--id') == nil ? 'name' : 'bundle identifier'
+VISIBILITY = ARGV.delete('--all') == nil ? 'whose visible is true' : ''
+
 case ARGV[0]
 when 'help', 'h','-h','--help'
 	help
 when nil,'list','l'
-	puts `osascript -e 'tell application "System Events" to return (name of every process whose visible is true) '`.split(', ')
+	puts `osascript -e 'tell application "System Events" to return (#{IDENTIFIER} of every process #{VISIBILITY}) '`.split(', ')
 when 'run','r'
 	puts `osascript -e 'tell application "#{ARGV[1]}" to activate'`
 when 'kill','k'
 	puts `osascript -e 'tell application "#{ARGV[1]}" to quit'`
 when 'running'
-	running =  `osascript -e 'tell application "System Events" to (name of processes) contains "#{ARGV[1]}"'`.strip
+	running =  `osascript -e 'tell application "System Events" to (#{IDENTIFIER}  of processes) contains "#{ARGV[1]}"'`.strip
 	exit (running == 'true') ? 0 : 1
 else
 	puts 'Unknown command'
