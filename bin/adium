@@ -30,6 +30,10 @@ when 'back','b'
 	exit false if ($running == false and $force == false)
 	`osascript -e 'tell application "Adium" to go available'`
 	puts "Adium is now available"
+when 'clear','c'
+	exit false if $running == false
+	`osascript -e 'tell application "Adium" to tell (every chat) to close'`
+	puts 'Closing chat windows'
 when 'quit','q'
 	`osascript -e 'tell application "Adium" to quit'`
 	puts 'Quitting Adium'
