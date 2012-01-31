@@ -14,12 +14,16 @@ if [ -f ~/.bash_local ]; then
     . ~/.bash_local
 fi
 
+function parse_git_branch {
+    git symbolic-ref HEAD 2>/dev/null | sed -e 's/refs\/heads\/\(.*\)/\(\1\)/'
+}
+
 if [ "$SSH_CONNECTION" == "" ]; then
     # Yellow prompt for local login
-    PS1="[\[\033[01;33m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\]]$"
+    PS1="[\[\033[01;33m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\]]\$(parse_git_branch)\n$ "
 else
     # Red prompt for remote login
-    PS1="[\[\033[01;31m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\]]$"
+    PS1="[\[\033[01;31m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\]]\$(parse_git_branch)\n$ "
 fi
 
 # Add Timestamp
