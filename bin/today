@@ -1,0 +1,5 @@
+#!/usr/bin/osascript
+set AppleScript's text item delimiters to "\n"
+tell application "The Hit List" 
+    get title of (every task in today list where completed is false and canceled is false) as string
+end tell
