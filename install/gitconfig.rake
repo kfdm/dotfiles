@@ -1,9 +1,13 @@
 namespace :install do
 	desc "Setup gitconfig data"
 	task :gitconfig do
-		require 'ini'
-		require 'colored'
-		$ini = Ini::load("#{$install_dir}/gitconfig.ini")
+		begin
+			require 'inifile'
+		rescue LoadError
+			require 'rubygems'
+			require 'inifile'
+		end
+		$ini = ::IniFile.load "#{$install_dir}/gitconfig.ini"
 		$ini.each do |section, parameter, value|
 			sh 'git','config','--global',"#{section}.#{parameter}","#{value}"
 		end
