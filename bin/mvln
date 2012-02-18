@@ -1,0 +1,51 @@
+#!/usr/bin/python
+"""Move a file and then symlink it
+
+Allows us to more easily move a file and then symlink
+to the new location for cases like moving a settings
+file to dropbox or a log file to ~/Library/Logs
+"""
+
+import argparse
+import os
+
+
+def full_path(path):
+    """Convert a path into the full path"""
+    return os.path.abspath(os.path.expanduser(path))
+
+header, footer = __doc__.split("\n\n", 1)
+
+parser = argparse.ArgumentParser(description=header, epilog=footer)
+parser.add_argument("-u", "--undo",
+    action="store_true",
+    help="Invert the command and remove the symlink and restore the file")
+parser.add_argument("-v", "--verbose",
+    action="store_true")
+parser.add_argument("file",
+    type=full_path,
+    help="The file we want to move")
+parser.add_argument("dest",
+    type=full_path,
+    help="Destination directory for the file")
+
+args = parser.parse_args()
+
+file_name = os.path.basename(args.file)
+dest_file = os.path.join(args.dest, file_name)
+
+if args.undo:
+    if args.verbose:
+        print "Moving", dest_file, "to", args.file
+    if os.path.islink(args.file):
+        os.remove(args.file)
+        os.rename(dest_file, args.file)
+
+else:
+    if os.path.exists(dest_file):
+        parser.error("Destination path exists\n %s" % dest_file)
+
+    if args.verbose:
+        print "Moving", args.file, "to", dest_file
+    os.rename(args.file, dest_file)
+    os.symlink(dest_file, args.file)
