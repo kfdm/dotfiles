@@ -1,5 +1,0 @@
-#!/bin/sh
-# http://onestoryeveryday.com/how-to-view-man-pages-in-the-browser.html
-#man $1 > /tmp/man && open /tmp/man
-
-man $1 | man2html > /tmp/man.html && open /tmp/man.html
