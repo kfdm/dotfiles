@@ -1,15 +1,18 @@
 #!/bin/sh
 # Simple script to tar up a zip directory to send off
 
+function notice { echo "$(tput bold)$(tput setaf 2)$*$(tput sgr0)"; }
+
 GIT_DIR=`git rev-parse --show-toplevel`
 if [ $? -ne 0 ]; then
 	exit 1
 fi
 
-TAR_FILE="`basename ${GIT_DIR}`.tgz"
+TAR_FILE="`basename ${GIT_DIR}`git.tgz"
 TAR_DIR=`basename ${GIT_DIR}`
 COMMAND="tar czfv ${TAR_FILE} ${TAR_DIR}"
 
+notice "Compressing ${GIT_DIR}"
 cd "${GIT_DIR}/.."
-echo $COMMAND
+notice $COMMAND
 `$COMMAND`
