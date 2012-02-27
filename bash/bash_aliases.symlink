@@ -6,6 +6,7 @@ alias ls='ls -hBG'
 alias lsrebuild='/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain system -domain user'
 alias flushdns='dscacheutil -flushcache'
 alias wisdom='fortune | cowsay -f kitty | lolcat'
+alias rmdss='find . -name "*.DS_Store" -type f -delete -print'
 
 # Requires 'brew install gnu-time'
 which -s gtime
