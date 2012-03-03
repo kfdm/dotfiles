@@ -1,4 +1,7 @@
 #!/usr/bin/env ruby
+
+$running = `osascript -e 'tell application "System Events" to (bundle identifier of processes) contains "com.apple.iTunes"'`.chomp! == 'true'
+
 case ARGV[0]
 when 'help','h',nil
 	puts <<-EOS.gsub(/^\t*/, '')
@@ -20,31 +23,40 @@ when 'play','p','start'
 	puts 'iTunes is now playing'
 	`osascript -e 'tell application "iTunes" to play'`
 when 'stop','s'
+	exit false if $running == false
 	puts 'Stopping iTunes'
 	`osascript -e 'tell application "iTunes" to stop'`
 when 'pause'
+	exit false if $running == false
 	puts 'Pausing itunes'
 	`osascript -e 'tell application "iTunes" to pause'`
 when 'next','n'
+	exit false if $running == false
 	puts 'next track ...'
 	`osascript -e 'tell application "iTunes" to next track'`
 when 'mute','m'
+	exit false if $running == false
 	puts 'muting...'
 	`osascript -e 'tell application "iTunes" to set mute to true'`
 when 'unmute'
+	exit false if $running == false
 	puts 'unmuting...'
 	`osascript -e 'tell application "iTunes" to set mute to false'`
 when 'prev','previous'
+	exit false if $running == false
 	puts 'previous track ...'
 	`osascript -e 'tell application "iTunes" to previous track'`
 when 'playlist','pl'
 	puts 'switching to playlist '+ARGV[1]
 	`osascript -e 'tell application "iTunes" to play playlist "#{ARGV[1]}"'`
 when 'volume','vol'
+	exit false if $running == false
 	`osascript -e 'tell application "iTunes" to set sound volume to  #{ARGV[1]}'`
 when 'quit','q','exit'
+	exit false if $running == false
 	`osascript -e 'tell application "iTunes" to quit'`
 when 'status','state'
+	exit false if $running == false
 	state = `osascript -e 'tell application "iTunes" to player state as string'`
 	puts "iTunes is currently #{state}"
 	track= `osascript <<EOF
