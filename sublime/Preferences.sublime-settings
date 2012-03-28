@@ -11,5 +11,6 @@
 		80,
 		100
 	],
-	"translate_tabs_to_spaces": true
+	"translate_tabs_to_spaces": true,
+	"font_size": 10
 }
