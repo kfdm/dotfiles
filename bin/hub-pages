@@ -1,0 +1,31 @@
+#!/usr/bin/env python
+"""Simple script to show which repos are have (or are missing) github pages"""
+
+import requests
+import json
+import argparse
+
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('account')
+options = parser.parse_args()
+
+
+def get_json(url):
+    r = requests.get(url)
+    r.raise_for_status()
+    return json.loads(r.text)
+
+repos = get_json('https://api.github.com/users/%s/repos' % options.account)
+for repo in repos:
+    repo['gh-pages'] = False
+    repo['account'] = repo['owner']['login']
+    branches = get_json(repo['url'] + '/branches')
+    for branch in branches:
+        if branch['name'] == 'gh-pages':
+            repo['gh-pages'] = True
+            break
+
+    if repo['gh-pages']:
+        print '%(name)-30s http://%(account)s.github.com/%(name)s' % repo
+    else:
+        print '%(name)-30s No Pages' % repo
