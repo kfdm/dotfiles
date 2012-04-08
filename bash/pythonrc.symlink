@@ -1,0 +1,24 @@
+# ~/.pythonrc
+# enable syntax completion
+import sys
+
+try:
+    import readline
+except ImportError:
+    print "Module readline not available."
+else:
+    import rlcompleter
+    if(sys.platform == 'darwin'):
+        readline.parse_and_bind ("bind ^I rl_complete")
+    else:
+        readline.parse_and_bind("tab: complete")
+
+import os, atexit
+history_file = os.path.join(os.environ['HOME'], '.python_history')
+try:
+    readline.read_history_file(history_file)
+except IOError:
+    pass
+readline.set_history_length(1000)
+atexit.register(readline.write_history_file, history_file)
+del os, readline, rlcompleter, atexit, history_file, __file__
