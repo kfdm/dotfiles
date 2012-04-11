@@ -24,6 +24,12 @@ FIGNORE="~:CVS:#:.pyc:.swp:.swa:apache-solr-*"
 
 export HISTCONTROL='ignoredups:ignorespace:erasedups'
 
+clear() {
+    /usr/bin/clear
+    [ "$TMUX_PANE" != "" ] && tmux clear-history
+}
+
+
 # Since Virtualenv Wrapper often takes a few seconds to load
 # have a stub function to load it the first time we request 
 # the workon command
