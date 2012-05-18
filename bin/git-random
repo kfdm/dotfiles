@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -e
+
+# Check to see if we're in a git directory
+git rev-parse -q
+
+# Random range
+RANGE=${1:-1}
+
+# Random file name
+NAME=${2:-random}
+
+echo 'Name' $NAME
+echo 'RANGE' $RANGE
+
+mkdir -p $NAME
+
+for i in $(seq 1 ${RANGE})
+do
+	echo $(date) > $NAME/$NAME.$RANDOM.txt
+done
+
+git add $NAME/$NAME.*
+git commit -m "Adding $RANGE files named $NAME/$NAME"
