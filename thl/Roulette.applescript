@@ -1,9 +1,12 @@
 tell application "The Hit List"
-	set tmp to my find_list("Roulette", groups in folders group)
+	set roulette_list to my find_list("Roulette", groups in folders group)
+	set roulette_task to some task of roulette_list
+	set due date of roulette_task to current date
 end tell
 
 on find_list(list_name, list_group)
-	repeat with theGroup in list_group
+	repeat with i from 1 to number of items in list_group
+		set theGroup to item i of list_group
 		if name of theGroup = list_name then
 			return theGroup
 		end if
