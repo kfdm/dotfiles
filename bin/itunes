@@ -51,7 +51,12 @@ when 'playlist','pl'
 	`osascript -e 'tell application "iTunes" to play playlist "#{ARGV[1]}"'`
 when 'volume','vol'
 	exit false if $running == false
-	`osascript -e 'tell application "iTunes" to set sound volume to  #{ARGV[1]}'`
+	if ARGV.length == 2
+		`osascript -e 'tell application "iTunes" to set sound volume to  #{ARGV[1]}'`
+	else
+		vol = `osascript -e 'tell application "iTunes" to return sound volume'`
+		puts "Current iTunes volume: #{vol}"
+	end
 when 'quit','q','exit'
 	exit false if $running == false
 	`osascript -e 'tell application "iTunes" to quit'`
