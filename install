@@ -1,0 +1,65 @@
+#!/usr/bin/env python
+
+import glob
+import os
+import platform
+import subprocess
+
+HOME_DIR = os.path.expanduser('~')
+DOTFILES_DIR = os.path.dirname(__file__)
+SYMLINKS_GLOB = '{0}/**/*.symlink'.format(DOTFILES_DIR)
+BACKUP_DIR = '{0}/.backup'.format(DOTFILES_DIR)
+
+GLOBAL_SETUP = '{0}/platform/global.sh'.format(DOTFILES_DIR)
+PLATFORM_SETUP = '{0}/platform/{1}.sh'.format(
+        DOTFILES_DIR,
+        platform.system().lower(),
+    )
+
+def symlink(source):
+    '''
+    Symlink dotfiles into the correct place
+
+    We assume a dot file named foo.symlink will be linked to ~/.foo
+    If there is already a file there, we will backup the old version
+    before linking it
+    '''
+    target = '{0}/.{1}'.format(
+            HOME_DIR,
+            os.path.basename(source.replace('.symlink', ''))
+        )
+    backup = '{0}/{1}'.format(
+            BACKUP_DIR,
+            os.path.basename(target)
+        )
+
+    if os.path.realpath(target) == os.path.realpath(source):
+        print 'Already installed:', source
+        return
+
+    if os.path.exists(target):
+        print 'Backing up old file: {0} -> {1}'.format(
+                target,
+                backup
+            )
+        os.rename(target, backup)
+
+    print 'Linking {0} -> {1}'.format(
+        source,
+        target
+    )
+    os.symlink(source, target)
+
+
+if __name__ == '__main__':
+    if not os.path.exists(BACKUP_DIR):
+        print 'Making backup directory'
+        os.makedirs(BACKUP_DIR)
+
+    for source in glob.glob(SYMLINKS_GLOB):
+        symlink(source)
+
+    for script in [GLOBAL_SETUP, PLATFORM_SETUP]:
+        if os.path.exists(script):
+            print 'Running', script
+            subprocess.call(script)
