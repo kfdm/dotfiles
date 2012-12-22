@@ -14,7 +14,7 @@ killall Dock
 defaults write com.apple.iTunes disablePing 1
 defaults write com.apple.iTunes disablePodcasts 1
 defaults write com.apple.iTunes disableRadio 1
-killall iTunes
+killall iTunes || true
 
 defaults write com.apple.Preview NSQuitAlwaysKeepsWindows 0
 defaults write com.apple.TextEdit NSQuitAlwaysKeepsWindows 0

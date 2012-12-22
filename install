@@ -7,14 +7,15 @@ import subprocess
 
 HOME_DIR = os.path.expanduser('~')
 DOTFILES_DIR = os.path.dirname(__file__)
-SYMLINKS_GLOB = '{0}/**/*.symlink'.format(DOTFILES_DIR)
-BACKUP_DIR = '{0}/.backup'.format(DOTFILES_DIR)
+SYMLINKS_GLOB = '%s/**/*.symlink' % (DOTFILES_DIR)
+BACKUP_DIR = '%s/.backup' % (DOTFILES_DIR)
 
-GLOBAL_SETUP = '{0}/platform/global.sh'.format(DOTFILES_DIR)
-PLATFORM_SETUP = '{0}/platform/{1}.sh'.format(
+GLOBAL_SETUP = '%s/platform/global.sh' % (DOTFILES_DIR)
+PLATFORM_SETUP = '%s/platform/%s.sh' % (
         DOTFILES_DIR,
         platform.system().lower(),
     )
+
 
 def symlink(source):
     '''
@@ -24,11 +25,11 @@ def symlink(source):
     If there is already a file there, we will backup the old version
     before linking it
     '''
-    target = '{0}/.{1}'.format(
+    target = '%s/.%s' % (
             HOME_DIR,
             os.path.basename(source.replace('.symlink', ''))
         )
-    backup = '{0}/{1}'.format(
+    backup = '%s/%s' % (
             BACKUP_DIR,
             os.path.basename(target)
         )
@@ -38,13 +39,13 @@ def symlink(source):
         return
 
     if os.path.exists(target):
-        print 'Backing up old file: {0} -> {1}'.format(
+        print 'Backing up old file: %s -> %s' % (
                 target,
                 backup
             )
         os.rename(target, backup)
 
-    print 'Linking {0} -> {1}'.format(
+    print 'Linking %s -> %s' % (
         source,
         target
     )
