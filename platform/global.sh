@@ -14,7 +14,7 @@ git config --global alias.st status
 git config --global alias.ci commit
 git config --global alias.co checkout
 git config --global alias.ru 'remote update --prune'
-git config --global alias.pretty = 'log --pretty --graph --decorate'
+git config --global alias.pretty 'log --pretty --graph --decorate'
 
 # Colors!
 git config --global color.ui true
