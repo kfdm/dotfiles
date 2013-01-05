@@ -1,0 +1,19 @@
+#!/usr/bin/osascript
+-- Log an event to iCal
+on run(args)
+    set calendarName to "Event Log"
+    set eventDate to current date
+
+    set AppleScript's text item delimiters to " "
+    set eventDescription to args as string
+
+    if eventDescription = "" then
+        return "Cannot add empty event"
+    end if
+
+    tell application "Calendar"
+        tell calendar calendarName
+            make new event at the end with properties {summary:eventDescription, start date:eventDate, end date:eventDate }
+        end tell
+    end tell
+end run
