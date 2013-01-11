@@ -11,7 +11,8 @@ on run(args)
         return "Cannot add empty event"
     end if
 
-    tell application "Calendar"
+    tell application "iCal"
+        activate
         tell calendar calendarName
             make new event at the end with properties {summary:eventDescription, start date:eventDate, end date:eventDate }
         end tell
