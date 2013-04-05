@@ -5,21 +5,37 @@ set -e
 # Check to see if we're in a git directory
 git rev-parse -q
 
+RANGE=1
+NAME=random
+
+while getopts r:f:m: option
+do
+        case "${option}"
+        in
+                r) RANGE=${OPTARG};;
+                f) FILE=${OPTARG};;
+                m) MSG=${OPTARG};;
+        esac
+done
+
 # Random range
-RANGE=${1:-1}
+RANGE="${RANGE:-RANGE}"
 
 # Random file name
-NAME=${2:-random}
+NAME="${NAME:-NAME}"
 
-echo 'Name' $NAME
-echo 'RANGE' $RANGE
+# Commit message
+MSG="${MSG:-Adding $RANGE files named $NAME/$NAME}"
+
+#echo 'Name' $NAME
+#echo 'RANGE' $RANGE
 
 mkdir -p $NAME
 
 for i in $(seq 1 ${RANGE})
 do
-	echo $(date) > $NAME/$NAME.$RANDOM.txt
+	echo $(date) > "$NAME/$NAME.$RANDOM.txt"
 done
 
 git add $NAME/$NAME.*
-git commit -m "Adding $RANGE files named $NAME/$NAME"
+git commit -m "$MSG"
