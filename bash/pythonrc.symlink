@@ -4,8 +4,8 @@ import sys
 
 try:
     import readline
-except ImportError:
-    print "Module readline not available."
+except ImportError as e:
+    print("Module readline not available.")
 else:
     import rlcompleter
     if(sys.platform == 'darwin'):
