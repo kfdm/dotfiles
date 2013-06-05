@@ -1,27 +1,56 @@
-#!/usr/bin/env ruby
-# Simple controller script for
-# https://github.com/ugol/pomodoro
+#!/usr/bin/env python2.7
 
-case ARGV[0]
-when 'help','h',nil
-    puts <<-EOS.gsub(/^\t*/, '')
-        Simple Pomodoro control script
-        ===========================
-        [s]tart [message] - Set 25 min Pomodoro
-        [r]eset           - Reset Pomodoro
-        [h]elp
-    EOS
-when 'start','s'
-    ARGV.shift
-    `osascript -e 'tell application "Pomodoro" to start "#{ARGV.join(' ')}" duration 25'`
-    puts "Starting 25 min Pomodoro Sprint [#{ARGV.join(' ')}]"
-when 'force','f'
-    `osascript -e 'tell application "Pomodoro" to force completion'`
-    puts "Force Pomodoro Sprint Completion"
-when 'reset','r'
-    `osascript -e 'tell application "Pomodoro" to reset'`
-    puts "Resetting Pomodoro Sprint"
-else
-    $stderr.puts "Unknown command " + ARGV.join(' ')
-    exit 1
-end
+import argparse
+import logging
+import subprocess
+
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    '-d',
+    '--duration',
+    default=25
+)
+parser.add_argument(
+    '-v',
+    '--verbosity',
+    action='store_const',
+    default=logging.WARNING,
+    const=logging.DEBUG
+)
+parser.add_argument(
+    '--reset',
+    action='store_true',
+    help="Reset"
+)
+parser.add_argument(
+    '--force',
+    action='store_true',
+    help="Force completion"
+)
+parser.add_argument(
+    'message',
+    nargs=argparse.REMAINDER
+)
+
+args = parser.parse_args()
+logging.basicConfig(level=args.verbosity)
+
+args.message = ' '.join(args.message).replace('"', '\\"')
+
+if args.force:
+    command = 'tell application "Pomodoro" to force completion'
+elif args.reset:
+    command = 'tell application "Pomodoro" to reset '
+elif args.message != "":
+    command = 'tell application "Pomodoro" to start "{0}" duration {1}'.format(
+        args.message,
+        args.duration,
+    )
+else:
+    parser.error('Missing pomodoro message')
+
+logging.debug('Arguments: %s', args)
+logging.debug('Command: %s', command)
+
+p = subprocess.Popen(['osascript'], stdin=subprocess.PIPE)
+p.communicate(command)
