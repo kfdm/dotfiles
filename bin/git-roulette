@@ -1,0 +1,98 @@
+#!/usr/bin/env python2.7
+
+import getpass
+import json
+import logging
+import os
+import random
+import urllib2
+import argparse
+
+HOME = os.path.expanduser('~')
+TOKEN_PATH = os.path.join(HOME, '.local', 'share', 'git-roulette', 'token')
+GITHUB_ACCOUNTS = 'https://github.com/settings/applications'
+GITHUB_ALL_ISSUES = 'https://api.github.com/issues?filter=all'
+GITHUB_REPO_ISSUES = 'https://api.github.com/repos/%s/%s/issues'
+
+
+logger = logging.getLogger()
+
+
+def get_token():
+    logger.debug('Checking for token in %s', TOKEN_PATH)
+    if os.path.exists(TOKEN_PATH):
+        with open(TOKEN_PATH) as fp:
+            return fp.read().strip()
+
+    print 'Navigate to', GITHUB_ACCOUNTS, 'and get an API Token'
+    token = getpass.getpass('API Token: ')
+    logger.debug('Writing token to %s', TOKEN_PATH)
+    os.makedirs(os.path.dirname(TOKEN_PATH))
+    with open(TOKEN_PATH, 'w') as fp:
+        fp.write(token)
+    return token
+
+
+def get_issues(token, repo):
+    if repo:
+        req = urllib2.Request(
+            url=GITHUB_REPO_ISSUES % tuple(repo.split('/')),
+            headers={'Authorization': 'token %s' % token}
+        )
+    else:
+        req = urllib2.Request(
+            url=GITHUB_ALL_ISSUES,
+            headers={'Authorization': 'token %s' % token}
+        )
+    try:
+        f = urllib2.urlopen(req)
+    except urllib2.HTTPError as e:
+        logger.exception('%s %s', e.url, e.message)
+        return []
+
+    try:
+        return json.loads(f.read())
+    except:
+        logger.exception('Error decoding json')
+        return []
+
+
+def format_issue(issue):
+    print 'Title:', issue['title']
+    print 'URL:', issue['html_url']
+    print 'Body:', issue['body']
+    print
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '-v',
+        '--verbose',
+        action='store_const',
+        default=logging.WARNING,
+        const=logging.DEBUG
+    )
+    parser.add_argument('-c', '--count', type=int, default=1)
+    parser.add_argument(
+        'repo',
+        nargs='?',
+        help='Optional repo in <user>/<repo> format'
+    )
+
+    args = parser.parse_args()
+
+    logging.basicConfig(level=args.verbose)
+    token = get_token()
+    issues = get_issues(token, args.repo)
+    logger.info('found %d issues', len(issues))
+    if issues:
+        random.shuffle(issues)
+        for issue in issues[0:args.count]:
+            format_issue(issue)
+    else:
+        print 'No issues found'
+
+
+if __name__ == '__main__':
+    main()
