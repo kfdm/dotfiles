@@ -4,13 +4,6 @@ export LANG="en_US.UTF-8"
 
 export PYTHONSTARTUP="$HOME/.pythonrc"
 
-# If we find Textmate, use it for our editor
-which -s mate
-if [ $? -eq 0 ]; then
-    export GEM_EDITOR='mate'
-    export GEM_OPEN_EDITOR="mate -w"
-fi
-
 # Include locally installed files
 PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 
