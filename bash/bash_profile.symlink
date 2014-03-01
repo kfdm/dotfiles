@@ -1,18 +1,22 @@
-export PATH="/usr/local/bin:/usr/local/sbin:$PATH" 
+export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 
 # Get the aliases and functions
 if [ -f ~/.bashrc ]; then
-        . ~/.bashrc
+    source ~/.bashrc
 fi
 
 # Global Aliases
 if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+    source ~/.bash_aliases
 fi
 
 if [ -f ~/.bash_local ]; then
-    . ~/.bash_local
+    source ~/.bash_local
 fi
+
+source /usr/local/Library/Contributions/brew_bash_completion.sh
+source /usr/local/etc/bash_completion.d/git-completion.bash
+source /usr/local/bin/virtualenvwrapper_lazy.sh
 
 function parse_git_branch {
     git symbolic-ref HEAD 2>/dev/null | sed -e 's/refs\/heads\/\(.*\)/\(\1\)/'
@@ -40,6 +44,3 @@ export PROMPT_COMMAND=timer_stop
 
 # Add Timestamp
 export PS1="[\[\033[01;32m\]\t | \${timer_show}\[\033[00m\]\]]$PS1"
-
-. /usr/local/Library/Contributions/brew_bash_completion.sh
-. /usr/local/etc/bash_completion.d/git-completion.bash

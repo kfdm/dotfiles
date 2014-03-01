@@ -23,12 +23,3 @@ clear() {
     /usr/bin/clear
     [ "$TMUX_PANE" != "" ] && tmux clear-history
 }
-
-
-# Since Virtualenv Wrapper often takes a few seconds to load
-# have a stub function to load it the first time we request 
-# the workon command
-workon() {
-    source /usr/local/bin/virtualenvwrapper.sh
-    workon $*
-}
