@@ -1,2 +1,3 @@
-sublime/Package Control.sublime-settings
 .backup/*
+sublime/Package Control.cache/*
+sublime/Package Control.sublime-settings
