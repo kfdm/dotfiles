@@ -4,7 +4,7 @@ import sys
 
 try:
     import readline
-except ImportError as e:
+except ImportError, e:
     print("Module readline not available.")
 else:
     import rlcompleter

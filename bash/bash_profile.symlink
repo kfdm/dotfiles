@@ -44,3 +44,22 @@ export PROMPT_COMMAND=timer_stop
 
 # Add Timestamp
 export PS1="[\[\033[01;32m\]\t | \${timer_show}\[\033[00m\]\]]$PS1"
+
+for src in \
+    /usr/local/Library/Contributions/brew_bash_completion.sh \
+    /usr/local/etc/bash_completion.d/git-completion.bash \
+    /usr/local/etc/bash_completion.d/git-flow-completion.bash \
+    /usr/local/etc/bash_completion.d/tmux \
+    ; do
+        if [ -f "$src" ]; then
+            source $src
+        fi
+done
+
+# Since Virtualenv Wrapper often takes a few seconds to load
+# have a stub function to load it the first time we request
+# the workon command
+if [ -f /usr/local/bin/virtualenvwrapper_lazy.sh ]; then
+    export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
+    source /usr/local/bin/virtualenvwrapper_lazy.sh
+fi
