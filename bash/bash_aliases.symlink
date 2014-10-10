@@ -1,3 +1,4 @@
+#!/bin/bash
 # Useful system aliases
 alias l.='ls -d .*'
 alias ll='ls -l'
