@@ -1,0 +1,2 @@
+#!/bin/sh
+git push origin $(git branch -r --merged | grep -v -e develop -e master -e HEAD | sed 's|origin/|:|g' | tr '\n' ' ')
