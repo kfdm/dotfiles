@@ -1,2 +1,7 @@
 #!/bin/sh
-for k in `git branch -r|awk '{print $1}'`;do echo -e `git show --pretty=format:"%Cgreen%ci_%C(blue)%cr_%Cred%cn_%Creset" $k|head -n 1`$k;done|sort -r|awk -F"_" '{printf("%s %25s %-22s %s\n",$1,$2,$3,$4)}'
+# Show a list of remote branches that have not been updated in a while
+# This is useful to figure out "dead" pull requests that can probably
+# be cleaned up
+for k in $(git branch --remote --no-merged); \
+do /bin/echo $(git show --pretty=format:"%ci|%cr|%cn|" $k | head -n 1)$k ;\
+done | sort -r | awk -F"|" '{printf("%s %25s %-22s %s\n",$1,$2,$3,$4)}'
