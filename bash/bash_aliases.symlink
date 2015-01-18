@@ -4,6 +4,7 @@ alias l.='ls -d .*'
 alias ll='ls -l'
 alias ls='ls -hBG'
 
+alias growlsync='growlme --sticky rsync'
 alias lsrebuild='/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain system -domain user'
 
 sw_vers -productVersion | grep -v 10.8 > /dev/null
