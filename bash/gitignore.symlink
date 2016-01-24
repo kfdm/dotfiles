@@ -19,6 +19,7 @@
 
 #Python Files
 *.pyc
+__pycache__
 
 #Screen files
 screenlog.*
