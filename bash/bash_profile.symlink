@@ -14,11 +14,10 @@ if [ -f ~/.bash_local ]; then
     source ~/.bash_local
 fi
 
-source /usr/local/Library/Contributions/brew_bash_completion.sh
+source /usr/local/bin/virtualenvwrapper_lazy.sh
+source /usr/local/etc/bash_completion.d/brew
 source /usr/local/etc/bash_completion.d/git-completion.bash
-#source /usr/local/etc/bash_completion.d/git-flow-completion.bash
 source /usr/local/etc/bash_completion.d/tmux
-source /Users/paultraylor/.local/venvs/virtualenvwrapper/bin/virtualenvwrapper_lazy.sh
 
 function parse_git_branch {
     git symbolic-ref HEAD 2>/dev/null | sed -e 's/refs\/heads\/\(.*\)/\(\1\)/'
