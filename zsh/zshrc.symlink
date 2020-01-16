@@ -1,3 +1,5 @@
+setopt EXTENDED_HISTORY
+
 # Useful system aliases
 alias  l.='ls -d .*'
 alias  ll='ls -l'
@@ -6,7 +8,13 @@ alias  ls='ls -hBG'
 fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
 autoload -Uz compinit && compinit
 
-setopt EXTENDED_HISTORY
-export PATH=$HOME/bin:$HOME/.local/bin:$PATH
+
+# Include locally installed files
+PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+
+# Include other user files
+PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+
+export PATH
 
 eval "$(starship init zsh)"
