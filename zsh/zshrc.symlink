@@ -5,6 +5,8 @@ alias  l.='ls -d .*'
 alias  ll='ls -l'
 alias  ls='ls -hBG'
 
+alias flushdns='sudo killall -HUP mDNSResponder'
+
 fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
 autoload -Uz compinit && compinit
 
