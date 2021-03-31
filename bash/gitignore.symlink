@@ -27,3 +27,5 @@ screenlog.*
 # Random
 *.log
 *.pid
+
+.vscode
