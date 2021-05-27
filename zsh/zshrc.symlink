@@ -1,4 +1,5 @@
 setopt EXTENDED_HISTORY
+setopt HIST_IGNORE_SPACE
 
 # Useful system aliases
 alias  l.='ls -d .*'
