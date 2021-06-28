@@ -20,6 +20,8 @@ PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 
 export PATH
 
+export EDITOR=vim
+
 eval "$(starship init zsh)"
 ATUIN_NOBIND=1
 eval "$(atuin init zsh)"
