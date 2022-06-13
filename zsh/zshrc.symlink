@@ -21,3 +21,11 @@ PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 export PATH
 
 eval "$(starship init zsh)"
+ATUIN_NOBIND=1
+eval "$(atuin init zsh)"
+bindkey '^r' _atuin_search_widget
+
+# Restore original up binding: https://til.simonwillison.net/macos/atuin
+#autoload -U history-search-end
+#zle -N history-beginning-search-backward-end history-search-end
+#bindkey "^[[A" history-beginning-search-backward-end
