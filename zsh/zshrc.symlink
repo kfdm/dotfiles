@@ -11,6 +11,9 @@ alias flushdns='sudo killall -HUP mDNSResponder'
 fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
 autoload -Uz compinit && compinit
 
+# meta delete will only remove one path part at a time
+autoload -U select-word-style
+select-word-style bash
 
 # Include locally installed files
 PATH="/usr/local/bin:/usr/local/sbin:$PATH"
