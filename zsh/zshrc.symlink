@@ -16,9 +16,6 @@ autoload -Uz compinit && compinit
 autoload -U select-word-style
 select-word-style bash
 
-# Include locally installed files
-PATH="/usr/local/bin:/usr/local/sbin:$PATH"
-
 # Include other user files
 PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 
